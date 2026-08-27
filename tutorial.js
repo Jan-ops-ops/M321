@@ -1,3 +1,10 @@
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import path from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.resolve(__dirname, '.env') });
+
 import { move_to_station, sell, buy, cockpit } from './utils.js';
 
 async function start() {
@@ -18,7 +25,7 @@ async function start() {
         await sell("Core Station", "IRON", cargo);
     }
     
-    await fetch('http://192.168.103.0:2009/set_target', { 
+    await fetch(`http://${process.env.API_IP}:2009/set_target`, { 
         method: 'POST', 
         body: JSON.stringify({ target: {x: 7000, y: 7000} }) 
     });
